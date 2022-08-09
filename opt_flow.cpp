@@ -40,7 +40,7 @@ int main( int argc, char** argv )
     bool nightMode = false;
     help();
     
-    // comment below (bad practice) upto "namedWindow". [lines 44-54] for playng video from a file
+    // comment below (bad practice) upto "namedWindow". [lines 46-56] for playng video from a file
     // |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
     // V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V
     cv::CommandLineParser parser(argc, argv, "{@input|0|}");
