@@ -31,25 +31,31 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* /*param*/ )
 }
 int main( int argc, char** argv )
 {
-    //VideoCapture cap;
-    VideoCapture cap ("/home/robotics/projects/vision/build/Minirover.mp4");
+    VideoCapture cap;
+    // VideoCapture cap ("path/to/video/file");
     TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,20,0.03);
     Size subPixWinSize(10,10), winSize(31,31);
     const int MAX_COUNT = 10000;
     bool needToInit = false;
     bool nightMode = false;
     help();
+    
+    // comment below (bad practice) upto "namedWindow". [lines 44-54] for playng video from a file
+    // |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
+    // V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V
     cv::CommandLineParser parser(argc, argv, "{@input|0|}");
     string input = parser.get<string>("@input");
-//     if( input.size() == 1 && isdigit(input[0]) )
-//         cap.open(input[0] - '0');
-//     else
-//         cap.open(input);
-//     if( !cap.isOpened() )
-//     {
-//         cout << "Could not initialize capturing...\n";
-//         return 0;
-//     }
+    if( input.size() == 1 && isdigit(input[0]) )
+         cap.open(input[0] - '0');
+     else
+         cap.open(input);
+     if( !cap.isOpened() )
+     {
+         cout << "Could not initialize capturing...\n";
+         return 0;
+     }
+    // ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  
+    // |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
     namedWindow( "LK Demo", 1 );
     setMouseCallback( "LK Demo", onMouse, 0 );
     Mat gray, prevGray, image, frame;
