@@ -31,34 +31,28 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* /*param*/ )
 }
 int main( int argc, char** argv )
 {
-    VideoCapture cap;
-    // VideoCapture cap ("path/to/video/file");
+    //VideoCapture cap;
+    VideoCapture cap ("/home/robotics/projects/vision/build/Minirover.mp4");
     TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,20,0.03);
     Size subPixWinSize(10,10), winSize(31,31);
-    const int MAX_COUNT = 10000;
+    const int MAX_COUNT = 100000;
     bool needToInit = false;
     bool nightMode = false;
     help();
-    
-    // comment below (bad practice) upto "namedWindow". [lines 46-56] for playng video from a file
-    // |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
-    // V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V
     cv::CommandLineParser parser(argc, argv, "{@input|0|}");
     string input = parser.get<string>("@input");
-    if( input.size() == 1 && isdigit(input[0]) )
-         cap.open(input[0] - '0');
-     else
-         cap.open(input);
-     if( !cap.isOpened() )
-     {
-         cout << "Could not initialize capturing...\n";
-         return 0;
-     }
-    // ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  
-    // |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+//     if( input.size() == 1 && isdigit(input[0]) )
+//         cap.open(input[0] - '0');
+//     else
+//         cap.open(input);
+//     if( !cap.isOpened() )
+//     {
+//         cout << "Could not initialize capturing...\n";
+//         return 0;
+//     }
     namedWindow( "LK Demo", 1 );
     setMouseCallback( "LK Demo", onMouse, 0 );
-    Mat gray, prevGray, image, frame;
+    Mat gray, prevGray, image, frame, edges;
     vector<Point2f> points[2];
     for(;;)
     {
@@ -67,6 +61,8 @@ int main( int argc, char** argv )
             break;
         frame.copyTo(image);
         cvtColor(image, gray, COLOR_BGR2GRAY);
+        blur( gray, gray, Size(5,5) );
+        Canny( gray, gray, 400, 1400, 5);
         if( nightMode )
             image = Scalar::all(0);
         if( needToInit )
