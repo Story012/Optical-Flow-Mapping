@@ -8,3 +8,6 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 add_executable(opt_flow opt_flow.cpp) 
 target_link_libraries( opt_flow ${OpenCV_LIBS} )
+
+add_executable(opt_tracking opt_tracking.cpp) 
+target_link_libraries( opt_tracking ${OpenCV_LIBS} )
