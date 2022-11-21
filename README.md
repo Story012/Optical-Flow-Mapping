@@ -8,6 +8,8 @@
 3. Hough lines. <br>
 ![independent_hough_lines.png](https://github.com/Story012/Optical-Flow-Mapping/blob/main/Flow%20mapping%20Images%20git/independent_hough_lines.png)
 4. Independently selected hough lines. <br>
+
+# Running the scripts
 To run the script sucessfully, ensure VideoCapture is set to either dev0 (a usb or built-in webcam) or a file, in which you must specify paths. 
 
 ```
